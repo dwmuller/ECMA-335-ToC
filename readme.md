@@ -1,17 +1,23 @@
-# CLR document improvment
+# A much improved PDF ToC for the ECMA-335 document
 
-Using [pdf.tocgen](https://github.com/Krasjet/pdf.tocgen) to add a usable index
-to the CLR spec.
+This is a quick git repo to save off and share some work that I spent far too
+much time on.
 
-Package was installed using PIP, executables are in
-~/AppData/Roaming/Python/Python311/Scripts/.
+The ECMA-335_*_out.pdf file contains a version of the specification with the
+improved ToC.
 
-The generated ToC required a little manual cleanup, but otherwise I used the
-workflow described in the project's readme in a pretty straightforward fashion.
+To reproduce it, you'll need Python already installed. Install
+[pdf.tocgen](https://github.com/Krasjet/pdf.tocgen) using PiP, as described in
+that project. (Many thanks to Krasjet for that tool.)
 
-Unfortunately, adding level 4 headings added numerous false detections. An AWK
-script in this directory can be used to filter these out:
+On my Windows system, the executables ended up in
+~/AppData/Roaming/Python/Python311/Scripts/, which I prepended to my path for
+this work.
+
+Follow the workflow described for pdf.tocgen, but use the AWK file in this
+project to massage the ToC output before using it to modify the PDF.
 
 ```bash
-pdftocgen -r recipe.toml  ECMA-335_6th_edition_june_2012.pdf | ./filter-toc.awk > toc
+pdftocgen -r recipe.toml ECMA-335_6th_edition_june_2012.pdf | ./filter-toc.awk > toc
+pdftocio -t toc ECMA-335_6th_edition_june_2012.pdf
  ```
